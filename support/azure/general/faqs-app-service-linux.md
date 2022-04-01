@@ -102,6 +102,15 @@ Yes, during a Git deployment, Kudu should detect that you're deploying a PHP app
 
 If `WEBSITES_ENABLE_APP_SERVICE_STORAGE` setting is **unspecified** or set to **true**, the `/home/` directory will be shared across scale instances, and files written will persist across restarts. Explicitly setting `WEBSITES_ENABLE_APP_SERVICE_STORAGE` to **false** will disable the mount.
 
+### My continaer is failing to start with "no space left on device". What does this mean?
+App Service Linux leverages two distinct types of storage during operation, the file system storage & the host disk space. The file system storage is included with your app service plan quota & in use when saving to persistent storage(/home). The host disk space is used to store container images & is managed by the platform through the docker storage driver.
+
+The host disk space is separate from the file system storage quota included with the App Service Plan and is not expandable. There is a 15GBs limit for each instance & will be used to store any custom images on the worker. You might be able to use greater than 15GBs depending on the exact availability of host disk space, but this is not guaranteed. 
+  
+If the container's writable layer saves data outside of /home or a [mounted azure storage path](byos link), this will also consume the host disk space. The platform routinely cleans this space to remove unused containers. Still, if the container writes large amounts of data outside of /home or BYOS, it will result in startup failures or runtime exceptions once the host disk space limit is exceeded.
+
+It's recommended to keep your container images as small as possible & leverage writing to persistent storage or bring your own storage when running on App Service Linux. If not possible, splitting the App Service Plan will be required since the host disk space is fixed & shared between all containers in the App Service Plan.
+
 ### My custom container takes a long time to start, and the platform restarts the container before it finishes starting up
 
 You can configure the amount of time the platform will wait before it restarts your container. To do so, set the `WEBSITES_CONTAINER_START_TIME_LIMIT` app setting to the value you want. The default value is 230 seconds, and the maximum value is 1800 seconds.
