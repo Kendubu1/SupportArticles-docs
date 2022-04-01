@@ -103,7 +103,7 @@ Yes, during a Git deployment, Kudu should detect that you're deploying a PHP app
 If `WEBSITES_ENABLE_APP_SERVICE_STORAGE` setting is **unspecified** or set to **true**, the `/home/` directory will be shared across scale instances, and files written will persist across restarts. Explicitly setting `WEBSITES_ENABLE_APP_SERVICE_STORAGE` to **false** will disable the mount.
 
 ### My continaer is failing to start with "no space left on device". What does this mean?
-App Service Linux leverages two distinct types of storage during operation, the file system storage & the host disk space. The file system storage is included with your app service plan quota & in use when saving to persistent storage(/home). The host disk space is used to store container images & is managed by the platform through the docker storage driver.
+App Service Linux leverages two distinct types of storage during operation, the file system storage & the host disk space. The file system storage is included with your app service plan quota & in use when saving to persistent storage(`/home`). The host disk space is used to store container images & is managed by the platform through the docker storage driver.
 
 The host disk space is separate from the file system storage quota included with the App Service Plan and is not expandable. There is a 15GB limit for each instance & will be used to store any custom images on the worker. You might be able to use greater than 15GBs depending on the exact availability of host disk space, but this is not guaranteed. 
   
