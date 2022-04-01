@@ -107,7 +107,7 @@ App Service Linux leverages two distinct types of storage during operation, the 
 
 The host disk space is separate from the file system storage quota included with the App Service Plan and is not expandable. There is a 15GB limit for each instance & will be used to store any custom images on the worker. You might be able to use greater than 15GBs depending on the exact availability of host disk space, but this is not guaranteed. 
   
-If the container's writable layer saves data outside of /home or a [mounted azure storage path](byos link), this will also consume the host disk space. The platform routinely cleans this space to remove unused containers. Still, if the container writes large amounts of data outside of /home or BYOS, it will result in startup failures or runtime exceptions once the host disk space limit is exceeded.
+If the container's writable layer saves data outside of /home or a [mounted azure storage path](https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-windows), this will also consume the host disk space. The platform routinely cleans this space to remove unused containers. Still, if the container writes large amounts of data outside of /home or BYOS, it will result in startup failures or runtime exceptions once the host disk space limit is exceeded.
 
 It's recommended to keep your container images as small as possible & leverage writing to persistent storage or bring your own storage when running on App Service Linux. If not possible, splitting the App Service Plan will be required since the host disk space is fixed & shared between all containers in the App Service Plan.
 
