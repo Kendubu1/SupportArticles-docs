@@ -46,7 +46,7 @@ Yes, you can do that through the source control management (SCM) site.
 
 ### How can I create a Linux App Service plan through an SDK or an Azure Resource Manager template?
 
-Set the **reserved** field of the app service to *true*.
+Set the **reserved** field of the app service to *true*. 
 
 ## Continuous integration and deployment
 
